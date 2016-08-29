@@ -333,8 +333,6 @@
 }
 
 - (void)select {
-    self.imageShape.fillColor = self.favoredColor.CGColor;
-    
     self.userInteractionEnabled = NO;
     [CATransaction setCompletionBlock:^{
         self.userInteractionEnabled = YES;
@@ -415,9 +413,20 @@
     [super setSelected:selected];
     if (selected) {
         self.imageShape.fillColor = self.favoredColor.CGColor;
-        [self select];
     } else {
         [self deselect];
+    }
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [self setSelected:selected];
+
+    if (!animated) {
+        return;
+    }
+    
+    if (selected && animated) {
+        [self select];
     }
 }
 

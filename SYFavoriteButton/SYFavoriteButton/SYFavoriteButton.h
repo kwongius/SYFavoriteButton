@@ -18,4 +18,6 @@ IB_DESIGNABLE
 @property (nonatomic, strong) IBInspectable UIColor *lineColor;
 @property (nonatomic, assign) IBInspectable CGFloat duration;
 
+- (void) setSelected:(BOOL)selected animated:(BOOL)animated;
+
 @end
