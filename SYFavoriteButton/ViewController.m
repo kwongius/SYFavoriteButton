@@ -32,7 +32,7 @@
 }
 
 - (IBAction)buttonAction:(SYFavoriteButton *)sender {
-    sender.selected = !sender.selected;
+    [sender setSelected:!sender.selected animated:TRUE];
 }
 
 - (IBAction)sliderAction:(UISlider *)sender {
