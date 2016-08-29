@@ -62,7 +62,10 @@
 }
 
 - (void)createLayersWithImage:(UIImage *)image {
-    self.layer.sublayers = nil;
+    while (self.layer.sublayers.count > 0)
+    {
+        [self.layer.sublayers[0] removeFromSuperlayer];
+    }
     
     CGRect imageFrame = CGRectMake(self.frame.size.width / 2 - self.frame.size.width / 4,
                                    self.frame.size.height / 2 - self.frame.size.height / 4,
@@ -137,7 +140,7 @@
         shapeLayer.bounds = imageFrame;
         shapeLayer.position = imgCenterPoint;
         shapeLayer.path = [[UIBezierPath bezierPathWithRect:imageFrame] CGPath];
-        shapeLayer.fillColor = self.defaultColor.CGColor;
+        shapeLayer.fillColor = (self.selected ? self.favoredColor :self.defaultColor).CGColor;
         shapeLayer.actions = [NSDictionary dictionaryWithObjectsAndKeys:@"fillColor", @"", nil];
         shapeLayer;
     });
@@ -415,6 +418,27 @@
         self.imageShape.fillColor = self.favoredColor.CGColor;
     } else {
         [self deselect];
+    }
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    CGRect oldFrame = [self frame];
+    [super setFrame:frame];
+    
+    if (!CGRectEqualToRect(oldFrame, frame)) {
+        [self createLayersWithImage:_image];
+    }
+}
+
+- (void)setBounds:(CGRect)bounds
+{
+    CGRect oldBounds = [self bounds];
+
+    [super setBounds:bounds];
+    
+    if (!CGRectEqualToRect(oldBounds, bounds)) {
+        [self createLayersWithImage:_image];
     }
 }
 
